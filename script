@@ -1,0 +1,65 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+
+-- -----------------------------------------------------
+-- Table `Escuela`.`Alumno`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Escuela`.`Alumno` (
+  `idAlumno` INT NOT NULL ,
+  `nombre` VARCHAR(45) NULL ,
+  `paterno` VARCHAR(45) NULL ,
+  `materno` VARCHAR(45) NULL ,
+  `email` VARCHAR(45) NULL ,
+  `calle` VARCHAR(45) NULL ,
+  `numero` VARCHAR(45) NULL ,
+  `colonia` VARCHAR(45) NULL ,
+  `delegacion` VARCHAR(45) NULL ,
+  `entidad` VARCHAR(45) NULL ,
+  `noTelefono` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idAlumno`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Escuela`.`Curso`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Escuela`.`Curso` (
+  `idCurso` INT NOT NULL ,
+  `nombre` VARCHAR(45) NULL ,
+  `fechaInicio` DATE NULL ,
+  `fechaFIn` DATE NULL ,
+  `cuotaDeRecuperacion` DECIMAL(10,2) NULL ,
+  PRIMARY KEY (`idCurso`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Escuela`.`Asignacion`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Escuela`.`Asignacion` (
+  `idAlumno` INT NOT NULL ,
+  `idCurso` INT NOT NULL ,
+  `horario` VARCHAR(45) NULL ,
+  `tipoCurso` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idAlumno`, `idCurso`) ,
+  INDEX `fk_Alumno_has_Curso_Curso1` (`idCurso` ASC) ,
+  INDEX `fk_Alumno_has_Curso_Alumno` (`idAlumno` ASC) ,
+  CONSTRAINT `fk_Alumno_has_Curso_Alumno`
+    FOREIGN KEY (`idAlumno` )
+    REFERENCES `Escuela`.`Alumno` (`idAlumno` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alumno_has_Curso_Curso1`
+    FOREIGN KEY (`idCurso` )
+    REFERENCES `Escuela`.`Curso` (`idCurso` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
